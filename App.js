@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Button, AsyncStorage} from 'react-native';
+import server_connection from './server_connection';
 
-// import Echo from 'laravel-echo/dist/echo';
-// import Socketio from 'socket.io-client';
-// import Echo from 'laravel-echo/dist/echo';
-// import io from 'socket.io-client/dist/socket.io';
 
 import Echo from 'laravel-echo/dist/echo';
 import io from 'socket.io-client';
 let echo;
-let class_this = null; 
+let class_this = null;
 export default class HelloWorldApp extends Component {
   constructor(props) {
     super(props);
@@ -27,20 +24,37 @@ export default class HelloWorldApp extends Component {
       // },
     });
 
-    echo.channel('laravel_database_channel-demo').listen('PostCreatedEvent', function(e) {
-      console.log('peyman logs : ', e);
-     class_this.setState({
-       text: JSON.stringify(e),
-     });
-   });
+    echo
+      .channel('laravel_database_channel-demo')
+      .listen('PostCreatedEvent', function(e) {
+        console.log('peyman logs : ', e);
+        class_this.setState({
+          text: JSON.stringify(e),
+        });
+      });
   }
 
   // componentDidMount() {
   //   this.setState({
   //     text: 'test connect'//JSON.stringify(e),
   //   });
-   
+
   // }
+
+  register_click() {
+    server_connection.register('mahsa', 'pmaasn@gmail.com', '1234567890');
+  }
+  login_click() {
+    server_connection.login('msn@gmail.com', '12');
+  }
+  click(){
+    if(server_connection.check_login()){
+      alert("is login")
+    } else {
+      alert("not login login")
+    }
+  }
+
   render() {
     if (!this.state.text) {
       return null;
@@ -48,6 +62,10 @@ export default class HelloWorldApp extends Component {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>{this.state.text}</Text>
+        <Button
+          title="Press me"
+          onPress={() => this.click()}
+        />
       </View>
     );
   }
