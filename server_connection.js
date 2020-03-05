@@ -5,6 +5,8 @@ const URLs = {
   user: 'user',
   login: 'Login',
   register: 'Register',
+  recovery: 'RecoveryPass', 
+  contact: 'Contact',
 };
 
 export default class server_connection {
@@ -21,8 +23,7 @@ export default class server_connection {
         'Content-Type': 'application/json',
         Accept: 'application/json, text-plain, */*',
         'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN':
-          '$2y$10$GZ3RAYAobp6Ms0PgxfILIuoXnMpt0LVnQOPD5/.RY7GkO9tAp4IRC',
+        'X-CSRF-TOKEN': 'NEBKA',
       }),
       body: JSON.stringify({
         UserName: email,
@@ -54,8 +55,7 @@ export default class server_connection {
         'Content-Type': 'application/json',
         Accept: 'application/json, text-plain, */*',
         'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN':
-          '$2y$10$GZ3RAYAobp6Ms0PgxfILIuoXnMpt0LVnQOPD5/.RY7GkO9tAp4IRC',
+        'X-CSRF-TOKEN': 'NEBKA',
       }),
       body: JSON.stringify({
         Password: pass,
@@ -102,5 +102,46 @@ export default class server_connection {
     } catch (e) {
       return e;
     }
+  }
+
+  static async recovery_pass() {
+    return await fetch(URLs.Root + URLs.recovery, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, */*',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN':this.user_token,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch recovery', responseJson);
+        return responseJson.data;
+      })
+      .catch(error => {
+        console.error('NABKE fetch recovery', error);
+        return error;
+      });
+  }
+  static async contact_list() {
+    return await fetch(URLs.Root + URLs.contact, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, */*',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN':this.user_token,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Contact List', responseJson);
+        return responseJson.data;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Contact List', error);
+        return error;
+      });
   }
 }
