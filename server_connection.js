@@ -14,7 +14,7 @@ const URLs = {
 
 export default class server_connection {
   static user_token = null;
-  static async register(name, email, pass , func=null) {
+  static async register(name, email, pass ,  func=null , this_class = null) {
     return await fetch(URLs.Root + URLs.register, {
       method: 'POST',
       headers: new Headers({
@@ -40,19 +40,19 @@ export default class server_connection {
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
         if(func!= null){
-          func(responseJson); 
+          func(responseJson , this_class); 
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Register user', error);
         if(func!= null){
-          func(error); 
+          func(error , this_class); 
         }
         return error;
       });
   }
-  static async login(email, pass , func=null) {
+  static async login(email, pass ,  func=null , this_class = null) {
     return await fetch(URLs.Root + URLs.login, {
       method: 'POST',
       headers: new Headers({
@@ -76,14 +76,14 @@ export default class server_connection {
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
         if(func!= null){
-          func(responseJson); 
+          func(responseJson, this_class); 
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Login user', error);
         if(func!= null){
-          func(error); 
+          func(error , this_class); 
         }
         return error;
       });
@@ -114,7 +114,7 @@ export default class server_connection {
     }
   }
 
-  static async recovery_pass(email, func=null) {
+  static async recovery_pass(email,  func=null , this_class = null) {
     return await fetch(URLs.Root + URLs.recovery, {
       method: 'POST',
       headers: new Headers({
@@ -131,14 +131,14 @@ export default class server_connection {
       .then(responseJson => {
         console.log('NABKE fetch recovery', responseJson);
         if(func!= null){
-          func(responseJson); 
+          func(responseJson , this_class); 
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch recovery', error);
         if(func!= null){
-          func(error); 
+          func(error , this_class); 
         }
         return error;
       });
@@ -168,14 +168,14 @@ export default class server_connection {
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
         if(func!= null){
-          func(responseJson); 
+          func(responseJson , this_class); 
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch change password', error);
         if(func!= null){
-          func(error); 
+          func(error , this_class); 
         }
         return error;
       });
@@ -197,14 +197,14 @@ export default class server_connection {
       .then(responseJson => {
         console.log('NABKE fetch Chat History', responseJson);
         if(func!= null){
-          func(responseJson); 
+          func(responseJson , this_class); 
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Chat History', error);
         if(func!= null){
-          func(error); 
+          func(error , this_class); 
         }
         return error;
       });
@@ -223,19 +223,19 @@ export default class server_connection {
       .then(responseJson => {
         console.log('NABKE fetch Contact List', responseJson);
         if(func!= null){
-          func(responseJson); 
+          func(responseJson , this_class); 
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Contact List', error);
         if(func!= null){
-          func(error); 
+          func(error , this_class); 
         }
         return error;
       });
   }
-  static async create_group(name, users , func=null) {
+  static async create_group(name, users ,  func=null , this_class = null) {
     return await fetch(URLs.Root + URLs.CreateGroup, {
       method: 'POST',
       headers: new Headers({
@@ -253,14 +253,14 @@ export default class server_connection {
       .then(responseJson => {
         console.log('NABKE fetch Contact List', responseJson);
         if(func!= null){
-          func(responseJson); 
+          func(responseJson , this_class); 
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Contact List', error);
         if(func!= null){
-          func(error); 
+          func(error , this_class); 
         }
         return error;
       });
