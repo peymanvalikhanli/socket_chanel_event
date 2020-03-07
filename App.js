@@ -40,8 +40,12 @@ export default class HelloWorldApp extends Component {
 
   // }
 
-  click() {
-    server_connection.register('mahsa', 'pm1212asssasn@gmail.com', '1234567890');
+  register_click() {
+    server_connection.register(
+      'mahsa',
+      'peymanvalikhanli2012@gmail.com',
+      '1234567890',
+    );
   }
   login_click() {
     server_connection.login('msn@gmail.com', '12');
@@ -59,15 +63,22 @@ export default class HelloWorldApp extends Component {
     } else {
       alert('not login login');
     }
-    
   }
-click1() {
-    if (server_connection.check_login()) {
-      server_connection.recovery_pass();
-    } else {
-      alert('not login login');
-    }
-    
+  recovery_click() {
+    server_connection.recovery_pass('peymanvalikhanli2012@gmail.com');
+  }
+  changepass_click() {
+    server_connection.change_pass(
+      'peymanvalikhanli2012@gmail.com',
+      '1234567890',
+      '1677',
+    );
+  }
+  ChatHistory_click() {
+    server_connection.ChatHistory(11);
+  }
+  CreateGroup_click() {
+    server_connection.create_group("NEBKA", [2,3]);
   }
 
   render() {
@@ -77,7 +88,12 @@ click1() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>{this.state.text}</Text>
-        <Button title="Press me" onPress={() => this.click()} />
+        <Button title="Registry" onPress={() => this.register_click()} />
+        <Button title="Recovery" onPress={() => this.recovery_click()} />
+        <Button title="Change pass" onPress={() => this.changepass_click()} />
+        <Button title="Check Login" onPress={() => this.check_login_click()} />
+        <Button title="Chat History" onPress={() => this.ChatHistory_click()} />
+        <Button title="Create Group" onPress={() => this.CreateGroup_click()} />
       </View>
     );
   }

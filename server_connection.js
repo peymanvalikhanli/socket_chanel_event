@@ -6,17 +6,15 @@ const URLs = {
   login: 'Login',
   register: 'Register',
   recovery: 'RecoveryPass', 
+  ChangePass: 'ChangePass',
   contact: 'Contact',
+  ChatHistory:'ChatHistory',
+  CreateGroup:'CreateGroup',
 };
 
 export default class server_connection {
   static user_token = null;
-  static async register(name, email, pass) {
-    const formData = new FormData();
-    formData.append('UserName', 'peyman');
-    formData.append('Password', '12334567');
-    formData.append('OfficePosition', '0');
-    formData.append('email', 'sada@dasd.com');
+  static async register(name, email, pass , func=null) {
     return await fetch(URLs.Root + URLs.register, {
       method: 'POST',
       headers: new Headers({
@@ -41,14 +39,20 @@ export default class server_connection {
           AsyncStorage.setItem('Name', responseJson.data.name);
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
-        return responseJson.data;
+        if(func!= null){
+          func(responseJson); 
+        }
+        return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Register user', error);
+        if(func!= null){
+          func(error); 
+        }
         return error;
       });
   }
-  static async login(email, pass) {
+  static async login(email, pass , func=null) {
     return await fetch(URLs.Root + URLs.login, {
       method: 'POST',
       headers: new Headers({
@@ -71,10 +75,16 @@ export default class server_connection {
           AsyncStorage.setItem('Name', responseJson.data.name);
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
-        return responseJson.data;
+        if(func!= null){
+          func(responseJson); 
+        }
+        return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Login user', error);
+        if(func!= null){
+          func(error); 
+        }
         return error;
       });
   }
@@ -104,27 +114,102 @@ export default class server_connection {
     }
   }
 
-  static async recovery_pass() {
+  static async recovery_pass(email, func=null) {
     return await fetch(URLs.Root + URLs.recovery, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
         Accept: 'application/json, text-plain, */*',
         'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN':this.user_token,
+        'X-CSRF-TOKEN': 'NEBKA',
+      }),
+      body: JSON.stringify({
+        email: email,
       }),
     })
       .then(response => response.json())
       .then(responseJson => {
         console.log('NABKE fetch recovery', responseJson);
-        return responseJson.data;
+        if(func!= null){
+          func(responseJson); 
+        }
+        return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch recovery', error);
+        if(func!= null){
+          func(error); 
+        }
         return error;
       });
   }
-  static async contact_list() {
+  static async change_pass(email,pass,code , func = null) {
+    return await fetch(URLs.Root + URLs.ChangePass, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, */*',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': 'NEBKA',
+      }),
+      body: JSON.stringify({
+        email: email,
+        code: code, 
+        Password: pass
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch change password', responseJson);
+        if (responseJson.data.token) {
+          AsyncStorage.setItem('Token', responseJson.data.token);
+          this.user_token = responseJson.data.token;
+          AsyncStorage.setItem('Name', responseJson.data.name);
+          AsyncStorage.setItem('Email', responseJson.data.email);
+        }
+        if(func!= null){
+          func(responseJson); 
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch change password', error);
+        if(func!= null){
+          func(error); 
+        }
+        return error;
+      });
+  }
+   static async ChatHistory(id, func = null) {
+    return await fetch(URLs.Root + URLs.ChatHistory, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, */*',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+      body: JSON.stringify({
+        id: id,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Chat History', responseJson);
+        if(func!= null){
+          func(responseJson); 
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Chat History', error);
+        if(func!= null){
+          func(error); 
+        }
+        return error;
+      });
+  }
+  static async contact_list(func = null) {
     return await fetch(URLs.Root + URLs.contact, {
       method: 'POST',
       headers: new Headers({
@@ -137,10 +222,46 @@ export default class server_connection {
       .then(response => response.json())
       .then(responseJson => {
         console.log('NABKE fetch Contact List', responseJson);
-        return responseJson.data;
+        if(func!= null){
+          func(responseJson); 
+        }
+        return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Contact List', error);
+        if(func!= null){
+          func(error); 
+        }
+        return error;
+      });
+  }
+  static async create_group(name, users , func=null) {
+    return await fetch(URLs.Root + URLs.CreateGroup, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, */*',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN':this.user_token,
+      }),
+      body: JSON.stringify({
+        Name: name,
+        Users: users, 
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Contact List', responseJson);
+        if(func!= null){
+          func(responseJson); 
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Contact List', error);
+        if(func!= null){
+          func(error); 
+        }
         return error;
       });
   }
