@@ -5,21 +5,21 @@ const URLs = {
   user: 'user',
   login: 'Login',
   register: 'Register',
-  recovery: 'RecoveryPass', 
+  recovery: 'RecoveryPass',
   ChangePass: 'ChangePass',
   contact: 'Contact',
-  ChatHistory:'ChatHistory',
-  CreateGroup:'CreateGroup',
+  ChatHistory: 'ChatHistory',
+  CreateGroup: 'CreateGroup',
 };
 
 export default class server_connection {
   static user_token = null;
-  static async register(name, email, pass ,  func=null , this_class = null) {
+  static async register(name, email, pass, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.register, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Accept: 'application/json, text-plain, */*',
+        Accept: 'application/json, text-plain, /',
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': 'NEBKA',
       }),
@@ -39,25 +39,25 @@ export default class server_connection {
           AsyncStorage.setItem('Name', responseJson.data.name);
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
-        if(func!= null){
-          func(responseJson , this_class); 
+        if (func != null) {
+          func(responseJson, this_class);
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Register user', error);
-        if(func!= null){
-          func(error , this_class); 
+        if (func != null) {
+          func(error, this_class);
         }
         return error;
       });
   }
-  static async login(email, pass ,  func=null , this_class = null) {
+  static async login(email, pass, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.login, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Accept: 'application/json, text-plain, */*',
+        Accept: 'application/json, text-plain, /',
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': 'NEBKA',
       }),
@@ -75,28 +75,42 @@ export default class server_connection {
           AsyncStorage.setItem('Name', responseJson.data.name);
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
-        if(func!= null){
-          func(responseJson, this_class); 
+        if (func != null) {
+          func(responseJson, this_class);
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Login user', error);
-        if(func!= null){
-          func(error , this_class); 
+        if (func != null) {
+          func(error, this_class);
         }
         return error;
       });
   }
 
-  static async check_login() {
+  static async check_login(this_class = null, func = null) {
     return AsyncStorage.getItem('Token', (err, result) => {
       if (result != null) {
         this.user_token = result;
         console.log('NEBKA check login :', result);
+        if (func != null) {
+          func(this_class);
+        } else if (this_class != null) {
+          this_class.setState({
+            n: this_class.props.navigation.navigate('ChatlistIndex'),
+          });
+        }
         return true;
       } else {
         console.log('NEBKA check login :', err);
+        if (func != null) {
+          func(this_class);
+        } else if (this_class != null) {
+          this_class.setState({
+            n: this_class.props.navigation.navigate('SignIn'),
+          });
+        }
         return false;
       }
     });
@@ -114,12 +128,12 @@ export default class server_connection {
     }
   }
 
-  static async recovery_pass(email,  func=null , this_class = null) {
+  static async recovery_pass(email, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.recovery, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Accept: 'application/json, text-plain, */*',
+        Accept: 'application/json, text-plain, /',
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': 'NEBKA',
       }),
@@ -130,32 +144,32 @@ export default class server_connection {
       .then(response => response.json())
       .then(responseJson => {
         console.log('NABKE fetch recovery', responseJson);
-        if(func!= null){
-          func(responseJson , this_class); 
+        if (func != null) {
+          func(responseJson, this_class);
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch recovery', error);
-        if(func!= null){
-          func(error , this_class); 
+        if (func != null) {
+          func(error, this_class);
         }
         return error;
       });
   }
-  static async change_pass(email,pass,code , func = null) {
+  static async change_pass(email, pass, code, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.ChangePass, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Accept: 'application/json, text-plain, */*',
+        Accept: 'application/json, text-plain, /',
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': 'NEBKA',
       }),
       body: JSON.stringify({
         email: email,
-        code: code, 
-        Password: pass
+        code: code,
+        Password: pass,
       }),
     })
       .then(response => response.json())
@@ -167,25 +181,25 @@ export default class server_connection {
           AsyncStorage.setItem('Name', responseJson.data.name);
           AsyncStorage.setItem('Email', responseJson.data.email);
         }
-        if(func!= null){
-          func(responseJson , this_class); 
+        if (func != null) {
+          func(responseJson, this_class);
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch change password', error);
-        if(func!= null){
-          func(error , this_class); 
+        if (func != null) {
+          func(error, this_class);
         }
         return error;
       });
   }
-   static async ChatHistory(id, func = null) {
+  static async ChatHistory(id, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.ChatHistory, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Accept: 'application/json, text-plain, */*',
+        Accept: 'application/json, text-plain, /',
         'X-Requested-With': 'XMLHttpRequest',
         'X-CSRF-TOKEN': this.user_token,
       }),
@@ -196,71 +210,71 @@ export default class server_connection {
       .then(response => response.json())
       .then(responseJson => {
         console.log('NABKE fetch Chat History', responseJson);
-        if(func!= null){
-          func(responseJson , this_class); 
+        if (func != null) {
+          func(responseJson, this_class);
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Chat History', error);
-        if(func!= null){
-          func(error , this_class); 
+        if (func != null) {
+          func(error, this_class);
         }
         return error;
       });
   }
-  static async contact_list(func = null) {
+  static async contact_list(func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.contact, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Accept: 'application/json, text-plain, */*',
+        Accept: 'application/json, text-plain, /',
         'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN':this.user_token,
+        'X-CSRF-TOKEN': this.user_token,
       }),
     })
       .then(response => response.json())
       .then(responseJson => {
         console.log('NABKE fetch Contact List', responseJson);
-        if(func!= null){
-          func(responseJson , this_class); 
+        if (func != null) {
+          func(responseJson, this_class);
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Contact List', error);
-        if(func!= null){
-          func(error , this_class); 
+        if (func != null) {
+          func(error, this_class);
         }
         return error;
       });
   }
-  static async create_group(name, users ,  func=null , this_class = null) {
+  static async create_group(name, users, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.CreateGroup, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Accept: 'application/json, text-plain, */*',
+        Accept: 'application/json, text-plain, /',
         'X-Requested-With': 'XMLHttpRequest',
-        'X-CSRF-TOKEN':this.user_token,
+        'X-CSRF-TOKEN': this.user_token,
       }),
       body: JSON.stringify({
         Name: name,
-        Users: users, 
+        Users: users,
       }),
     })
       .then(response => response.json())
       .then(responseJson => {
         console.log('NABKE fetch Contact List', responseJson);
-        if(func!= null){
-          func(responseJson , this_class); 
+        if (func != null) {
+          func(responseJson, this_class);
         }
         return responseJson;
       })
       .catch(error => {
         console.error('NABKE fetch Contact List', error);
-        if(func!= null){
-          func(error , this_class); 
+        if (func != null) {
+          func(error, this_class);
         }
         return error;
       });
