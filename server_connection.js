@@ -10,6 +10,13 @@ const URLs = {
   contact: 'Contact',
   ChatHistory: 'ChatHistory',
   CreateGroup: 'CreateGroup',
+  GroupHistory: 'GroupHistory',
+  SendMessage:"SendMessage", 
+  SendMessageGroup:"SendMessageGroup", 
+  DeleteMessage:"DeleteMessage", 
+  DeleteMessageGroup:"DeleteMessageGroup", 
+  Chatlist:"ChatList", 
+  GroupList:"GroupList", 
 };
 
 export default class server_connection {
@@ -223,6 +230,37 @@ export default class server_connection {
         return error;
       });
   }
+
+  static async GroupHistory(id, func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.GroupHistory, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+      body: JSON.stringify({
+        id: id,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Chat History', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Chat History', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
+
   static async contact_list(func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.contact, {
       method: 'POST',
@@ -249,6 +287,7 @@ export default class server_connection {
         return error;
       });
   }
+
   static async create_group(name, users, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.CreateGroup, {
       method: 'POST',
@@ -278,5 +317,185 @@ export default class server_connection {
         }
         return error;
       });
+  } 
+  
+  static async send_message(id, message, title, func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.SendMessage, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+      body: JSON.stringify({
+        id: id,
+        message: message,
+        title : title
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Send Message', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Send Message', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
   }
+
+  static async send_message_group(id, message, title, func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.SendMessageGroup, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+      body: JSON.stringify({
+        id: id,
+        message: message,
+        title : title
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Send Message', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Send Message', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
+
+  static async delete_message(id, func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.DeleteMessage, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+      body: JSON.stringify({
+        id: id,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Delete Message', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Delete Message', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
+
+  static async delete_message_group(id, func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.DeleteMessageGroup, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+      body: JSON.stringify({
+        id: id,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Delete Message Group', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Delete Message Group', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
+
+ static async Chat_list(func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.Chatlist, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Chat list', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Chat list', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
+
+ static async group_list(func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.GroupList, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Group list', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Group list', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
+
+
 }

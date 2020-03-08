@@ -75,10 +75,30 @@ export default class HelloWorldApp extends Component {
     );
   }
   ChatHistory_click() {
-    server_connection.ChatHistory(11);
+    server_connection.ChatHistory(2);
   }
   CreateGroup_click() {
     server_connection.create_group("NEBKA", [2,3]);
+  }
+
+  SendMessage_click(){
+    server_connection.send_message(2,"salam chetori",''); 
+  }
+
+ SendMessageGroup_click(){
+    server_connection.send_message_group(2,"salam chetori",'test'); 
+  }
+  DeleteMessageGroup_click(){
+    server_connection.delete_message_group("2"); 
+  }
+  DeleteMessage_click(){
+    server_connection.delete_message("2"); 
+  }
+  Chat_list_click(){
+    server_connection.Chat_list(); 
+  }
+  Group_list_click(){
+    server_connection.group_list(); 
   }
 
   render() {
@@ -94,6 +114,12 @@ export default class HelloWorldApp extends Component {
         <Button title="Check Login" onPress={() => this.check_login_click()} />
         <Button title="Chat History" onPress={() => this.ChatHistory_click()} />
         <Button title="Create Group" onPress={() => this.CreateGroup_click()} />
+        <Button title="Send Message" onPress={() => this.SendMessage_click()} />
+        <Button title="Send Message Group" onPress={() => this.SendMessageGroup_click()} />
+        <Button title="Delete Message" onPress={() => this.DeleteMessage_click()} />
+        <Button title="Delete Message Group" onPress={() => this.DeleteMessageGroup_click()} />
+        <Button title="Chat list" onPress={() => this.Chat_list_click()} />
+        <Button title="Group list" onPress={() => this.Group_list_click()} />
       </View>
     );
   }
