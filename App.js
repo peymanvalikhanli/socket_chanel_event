@@ -11,28 +11,43 @@ export default class HelloWorldApp extends Component {
     super(props);
     this.state = {text: 'peyman ...'};
     class_this = this;
-    // echo = new Echo({
-    //   broadcaster: 'socket.io',
-    //   host: 'http://164.138.18.90:6001',
-    //   client: io,
-    //   // auth: {
-    //   //   headers: {
-    //   //     Authorization: '5024144a6cc71e84989978bc0afc85ab',
-    //   //   },
-    //   //   // key:'',
-    //   // },
-    // });
+    echo = new Echo({
+      broadcaster: 'socket.io',
+      host: 'http://164.138.18.90:6001',
+      client: io,
+      auth: {
+        headers: {
+          'X-CSRF-TOKEN': server_connection.user_token
+        }
+      },
+      // auth: {
+      //   headers: {
+      //     Authorization: '5024144a6cc71e84989978bc0afc85ab',
+      //   },
+      //   // key:'',
+      // },
+    });
 
-    // echo
-    //   .channel('laravel_database_channel-demo')
-    //   .listen('PostCreatedEvent', function(e) {
-    //     console.log('peyman logs : ', e);
-    //     class_this.setState({
-    //       text: JSON.stringify(e),
-    //     });
-    //   });
+    echo
+      .channel('laravel_database_channel-demo')
+      .listen('PostCreatedEvent', function(e) {
+        console.warn('peyman logs : ', e);
+        class_this.setState({
+          text: JSON.stringify(e),
+        });
+      });
+      console.log("listen echo :",'laravel_database_private-message.'+server_connection.user_token);
+      echo 
+      .channel('laravel_database_private-message.$2y$10$n.9umdRNFBfA81unZUP9WO/2vBpJLbTz7lPDEmgXjXjWn3uZB/T26')
+      .listen('PostCreatedEvent', function(e) {
+        console.warn('newpost logs : ', e);
+        class_this.setState({
+          text: JSON.stringify(e),
+        });
+      });
+     
   }
-
+ 
   // componentDidMount() {
   //   this.setState({
   //     text: 'test connect'//JSON.stringify(e),
@@ -82,11 +97,11 @@ export default class HelloWorldApp extends Component {
   }
 
   SendMessage_click(){
-    server_connection.send_message(2,"salam chetori",''); 
+    server_connection.send_message(1,"salam chetori",''); 
   }
 
  SendMessageGroup_click(){
-    server_connection.send_message_group(2,"salam chetori",'test'); 
+    server_connection.send_message_group(1,"salam chetori",'test'); 
   }
   DeleteMessageGroup_click(){
     server_connection.delete_message_group("2"); 
@@ -120,6 +135,7 @@ export default class HelloWorldApp extends Component {
         <Button title="Delete Message Group" onPress={() => this.DeleteMessageGroup_click()} />
         <Button title="Chat list" onPress={() => this.Chat_list_click()} />
         <Button title="Group list" onPress={() => this.Group_list_click()} />
+        <Button title="contact List" onPress={() => this.contactList_click()} />
       </View>
     );
   }

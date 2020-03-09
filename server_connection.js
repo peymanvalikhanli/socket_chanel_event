@@ -17,6 +17,7 @@ const URLs = {
   DeleteMessageGroup:"DeleteMessageGroup", 
   Chatlist:"ChatList", 
   GroupList:"GroupList", 
+  SendFileChat:"SendFileChat", 
 };
 
 export default class server_connection {
@@ -471,6 +472,33 @@ export default class server_connection {
   }
 
  static async group_list(func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.GroupList, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Group list', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Group list', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
+  
+  static async send_file_chat(func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.GroupList, {
       method: 'POST',
       headers: new Headers({
