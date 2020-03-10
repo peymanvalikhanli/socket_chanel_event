@@ -36,11 +36,11 @@ export default class HelloWorldApp extends Component {
           text: JSON.stringify(e),
         });
       });
-      console.log("listen echo :",'laravel_database_private-message.'+server_connection.user_token);
+     // console.log("listen echo :",'laravel_database_private-message.'+server_connection.user_token);
       echo 
-      .channel('laravel_database_private-message.$2y$10$n.9umdRNFBfA81unZUP9WO/2vBpJLbTz7lPDEmgXjXjWn3uZB/T26')
+      .channel("laravel_database_private-message.$2y$10$n.9umdRNFBfA81unZUP9WO/2vBpJLbTz7lPDEmgXjXjWn3uZB/T26")
       .listen('PostCreatedEvent', function(e) {
-        console.warn('newpost logs : ', e);
+        console.log('newpost logs : ', e);
         class_this.setState({
           text: JSON.stringify(e),
         });
@@ -48,6 +48,7 @@ export default class HelloWorldApp extends Component {
      
   }
  
+
   // componentDidMount() {
   //   this.setState({
   //     text: 'test connect'//JSON.stringify(e),
@@ -57,13 +58,13 @@ export default class HelloWorldApp extends Component {
 
   register_click() {
     server_connection.register(
-      'mahsa',
-      'peymanvalikhanli2012@gmail.com',
-      '1234567890',
+      'romel',
+      'abcd@gmail.com',
+      'asdfghjkl',
     );
   }
   login_click() {
-    server_connection.login('msn@gmail.com', '12');
+    server_connection.login('abcd@gmail.com', 'asdfghjkl');
   }
   check_login_click() {
     if (server_connection.check_login()) {
@@ -80,7 +81,7 @@ export default class HelloWorldApp extends Component {
     }
   }
   recovery_click() {
-    server_connection.recovery_pass('peymanvalikhanli2012@gmail.com');
+    server_connection.recovery_pass('romel@gmail.com');
   }
   changepass_click() {
     server_connection.change_pass(
@@ -97,11 +98,11 @@ export default class HelloWorldApp extends Component {
   }
 
   SendMessage_click(){
-    server_connection.send_message(1,"salam chetori",''); 
+    server_connection.send_message(2,"biya bebin",''); 
   }
 
  SendMessageGroup_click(){
-    server_connection.send_message_group(1,"salam chetori",'test'); 
+    server_connection.send_message_group(2,"salam chetori",'test'); 
   }
   DeleteMessageGroup_click(){
     server_connection.delete_message_group("2"); 
@@ -124,6 +125,7 @@ export default class HelloWorldApp extends Component {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>{this.state.text}</Text>
         <Button title="Registry" onPress={() => this.register_click()} />
+        <Button title="Login" onPress={() => this.login_click()} />
         <Button title="Recovery" onPress={() => this.recovery_click()} />
         <Button title="Change pass" onPress={() => this.changepass_click()} />
         <Button title="Check Login" onPress={() => this.check_login_click()} />
