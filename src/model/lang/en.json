@@ -1,0 +1,10 @@
+{
+    "duplicate": "this user (Email) is exist.. ", 
+    "usereror": "Enter username",
+    "FirstName":"First Name",
+    "invalidUsername": "Email is invalid !",  
+    "invalidPassword": "invalid Password",
+    "btn_login":"login",
+    "btn_register":"Do you registered ?",
+    "btn_forget_password":"forget password"
+}
