@@ -108,7 +108,7 @@ export default class SignIn extends Component {
                 switch (true) {
                     case text.includes("Duplicate"):
                        // TODO: romel set duplicate error   
-                       this.setState({
+                       this_class.setState({
                         spiner: false
                     })
                        alert(lang.duplicate);

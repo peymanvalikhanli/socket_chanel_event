@@ -22,12 +22,11 @@ export default class GroupMemberComponent extends Component {
         return (
             <TouchableOpacity onPress={()=>this.check()}>
             <Card>
-                <CardItem style={MainCss.chatlistcartitem}>
-                    <View style={MainCss.chatlistitem1}>
-                        <View style={{ width: 50, height: 50, }}>
+                <CardItem >
+                    <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',flex:1}}>
                             <Image source={this.props.imgpro} resizeMode='stretch' style={{ width: 50, height: 50 }} />
-                        </View>
-                        <Text style={{ fontSize: 15 }}>{this.props.name}</Text>
+                      
+                        <Text style={{ fontSize: 16,color:'#29487d',fontWeight:'bold'  }}>{this.props.name}</Text>
                         {this.state.check &&
                           <View style={MainCss.chatlistitem2}>
                           <Icon name="checkcircleo" type="AntDesign" style={{color: 'green', }} />

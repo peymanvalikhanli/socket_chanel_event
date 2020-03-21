@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, Platform, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, Platform, TextInput,BackHandler } from 'react-native';
 import { Container, Header, Content, Icon, Title, Card, Footer, Input, Thumbnail } from 'native-base';
 import MainCss from '../MainCss';
 import GroupMemberComponent from './GroupMemberComponent'
@@ -15,6 +15,18 @@ export default class NewGroupChat extends Component {
         this.state = {
             data: []
         };
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackButtonClick());
+    };
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => this.handleBackButtonClick());
+    };
+    handleBackButtonClick() {
+
+        this.props.navigation.goBack();
+        return true;
     }
     call_back_contact_list(data, this_class) {
         console.log("contact list :", data);
@@ -38,18 +50,23 @@ export default class NewGroupChat extends Component {
             imgpro={item.image}
             date={item.date}
 
-
+             
         />)
+
+        // confirm(){
+        //     server_connection.register(name, email, pass, this.call_back_reg , this);
+
+        // }
     render() {
         return (
             <Container>
                 <Header style={MainCss.header}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                        <Icon name="arrowleft" type="AntDesign" style={{ color: '#faa61a' }} />
+                        <Icon name="arrowleft" type="AntDesign" style={{ color: '#987a3b' }} />
                     </TouchableOpacity>
                     <Title>new Group Chat</Title>
-                    <TouchableOpacity>
-                        <Icon name="check-circle" type="Feather" style={{ color: '#faa61a' }} />
+                    <TouchableOpacity onPress={()=>this.confirm()}>
+                        <Icon name="check-circle" type="Feather" style={{ color: '#987a3b' }} />
                     </TouchableOpacity>
                 </Header>
 

@@ -56,8 +56,8 @@ export default class SendPrivate extends Component {
                             {this.props.text ?
                                 <View style={MainCss.text1send}>
 
-                                    <Text style={{ marginTop: 5 }}>{this.props.text}</Text>
-                                    <Text style={{ marginTop: 20, fontSize: 10 }}>{this.props.date}</Text>
+                                    <Text style={{ marginTop: 5,color:'#987a3b',fontWeight:'bold'}}>{this.props.text}</Text>
+                                    <Text style={{ marginTop: 20, fontSize: 10,color:'#987a3b',fontWeight:'bold' }}>{this.props.date}</Text>
                                 </View> :
 
                                 this.props.camera ?

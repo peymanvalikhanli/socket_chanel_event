@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Image, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Image, Platform,BackHandler } from 'react-native';
 import { Container, Header, Content, Icon, Title, Card, Footer, Input, Thumbnail } from 'native-base';
 import Modal from "react-native-modal";
 import MainCss from '../MainCss';
@@ -40,7 +40,7 @@ export default class NewChatPrivate extends Component {
             txt: '',
             data: [],
         };
-
+        server_connection.chat_By ="romel";// this.state.user_data.name; 
         class_this = this;
         echo = new Echo({
           broadcaster: 'socket.io',
@@ -82,7 +82,18 @@ export default class NewChatPrivate extends Component {
 
 
     }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', () => this.handleBackButtonClick());
+    };
 
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', () => this.handleBackButtonClick());
+    };
+    handleBackButtonClick() {
+
+        this.props.navigation.goBack();
+        return true;
+    }
     call_back_chat_history(data, this_class) {
         // key: 'a',
         // text: 'testasdasdasdsadasdasdasdasdasdsdasdasasdsasadasdasdd',
@@ -324,16 +335,24 @@ export default class NewChatPrivate extends Component {
         }
         return (
             <Container>
-                <Header style={MainCss.header}>
+                <Header style={[MainCss.header,{backgroundColor:'#ebeef4'}]}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                        <Icon name="arrowleft" type="AntDesign" style={{ color: '#faa61a' }} />
+                        <Icon name="arrowleft" type="AntDesign" style={{ color: '#987a3b' }} />
                     </TouchableOpacity>
-                    <Title>{data.name}</Title>
+                    <Title style={{color:'#3B5998'}}>{data.name}</Title>
                     <Text></Text>
 
                 </Header>
 
-                <View style={{ flex: 1 }}>
+               
+                <Image source={require('../../../Images/patern5.jpeg')} resizeMode='stretch' style={MainCss.backgroundImage} />
+                <FlatList
+                    ref="fla"
+                    data={this.state.data}
+                    keyExtractor={(item, index) => item.key}
+                    renderItem={this.renderItem}
+                />
+ <View style={{ flex: 1 }}>
                     <Modal isVisible={this.state.isModalVisible}
                         onBackdropPress={this.toggleModal}
                         backdropColor="white"
@@ -374,17 +393,9 @@ export default class NewChatPrivate extends Component {
                         </View>
                     </Modal>
                 </View>
-                <Image source={require('../../../Images/patern2.jpg')} resizeMode='stretch' style={MainCss.backgroundImage} />
-                <FlatList
-                    ref="fla"
-                    data={this.state.data}
-                    keyExtractor={(item, index) => item.key}
-                    renderItem={this.renderItem}
-                />
-
                 <Footer style={MainCss.newchatprivateviewtotal}>
 
-                    <TouchableOpacity activeOpacity={0.8} onPress={() => this.camera()} style={MainCss.footertouch}>
+                    <TouchableOpacity activeOpacity={0.5} onPress={() => this.camera()} style={MainCss.footertouch}>
                         <Icon name="camera" type="Feather" style={MainCss.footericon} />
                     </TouchableOpacity>
                     <View style={{ height: 40, borderRadius: 15, width: (this.state.width) }}>
@@ -394,17 +405,17 @@ export default class NewChatPrivate extends Component {
                         />
                     </View>
                     {this.state.hide3 &&
-                        <TouchableOpacity activeOpacity={0.8} onPress={this.toggleModal} style={MainCss.footertouch}>
+                        <TouchableOpacity activeOpacity={0.5} onPress={this.toggleModal} style={MainCss.footertouch}>
                             <Icon name="attachment" type="Entypo" style={[MainCss.footericon, { fontSize: 21 }]} />
                         </TouchableOpacity>
                     }
                     {this.state.hide2 &&
-                        <TouchableOpacity activeOpacity={0.8} style={[MainCss.footertouch, { backgroundColor: 'green' }]}>
+                        <TouchableOpacity activeOpacity={0.5} style={[MainCss.footertouch, { backgroundColor: 'green' }]}>
                             <Icon name="keyboard-voice" type="MaterialIcons" style={MainCss.footericon} />
                         </TouchableOpacity>
                     }
                     {this.state.hide &&
-                        <TouchableOpacity activeOpacity={0.8} disabled={this.state.disableinput} style={MainCss.footertouch}
+                        <TouchableOpacity activeOpacity={0.5} disabled={this.state.disableinput} style={MainCss.footertouch}
                             onPress={this.clickinput.bind(this)}>
                             <Icon name="chevron-right" type="MaterialIcons" style={{ fontSize: 40, color: '#3f51b5' }} />
                         </TouchableOpacity>

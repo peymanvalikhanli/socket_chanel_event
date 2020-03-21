@@ -5,6 +5,7 @@ const MainCss = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor:'#ffff'
     },
     chatlistcartitem: {
         flexDirection: 'row',
@@ -14,7 +15,7 @@ const MainCss = {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        flex:1
+
     },
     totalnewchat: {
         alignSelf: 'center',
@@ -43,7 +44,7 @@ const MainCss = {
         minWidth: '30%',
         maxWidth: '80%',
         minHeight: 20,
-        backgroundColor: '#dfe3ee',
+        backgroundColor: 'white',
         borderRadius: 10,
         paddingRight: 5,
         paddingLeft: 5,

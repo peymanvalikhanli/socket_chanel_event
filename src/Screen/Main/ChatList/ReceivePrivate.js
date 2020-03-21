@@ -37,17 +37,16 @@ export default class ReceivePrivate extends Component {
 
         return (
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
 
-                <TouchableOpacity onPress={() => this.swipe()}  style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 1 }}>
-                    <View style={{marginTop:10}}>
-                        <View>
+                <TouchableOpacity onPress={() => this.swipe()}  style={{position:'relative' ,flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',  }}>
+                    <View style={{marginTop:10,width:150}}>
+ 
                             {/* <Thumbnail source={this.props.img} resizeMode='stretch'/> */}
                             <View style={MainCss.text1receve}>
-                                <Text style={{ marginTop: 5 }}>{this.props.text}</Text>
-                                <Text style={{ marginTop: 20, fontSize: 10 }}>{this.props.date}</Text>
+                                <Text style={{ marginTop: 5,color:'#3b5998',fontWeight:'bold' }}>{this.props.text}</Text>
+                                <Text style={{ marginTop: 20, fontSize: 10,color:'#3b5998',fontWeight:'bold'  }}>{this.props.date}</Text>
                             </View>
-                        </View>
+                        
                     </View>
 
                     {this.state.forward &&
@@ -64,7 +63,6 @@ export default class ReceivePrivate extends Component {
             }
                 </TouchableOpacity>
          
-                </View>
         )
     }
 }

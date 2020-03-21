@@ -10,4 +10,4 @@ import m from './src/Screen/Main/TaskList/TaskList';
 
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => A);
+AppRegistry.registerComponent(appName, () => App);

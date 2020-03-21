@@ -25,6 +25,7 @@
          height:130,
          alignSelf:'center',
          marginTop:20,
+         backgroundColor:'#ffffff'
      },
      imgsignup:{
          width: 100,

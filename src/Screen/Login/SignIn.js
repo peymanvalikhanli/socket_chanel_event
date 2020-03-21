@@ -66,10 +66,7 @@ export default class SignIn extends Component {
         } else {
 
             server_connection.login(user, pass, this.call_back_login, this);
-            this.setState({
-                spiner: true
-            })
-
+  
         }
     }
 
@@ -79,15 +76,12 @@ export default class SignIn extends Component {
                 var text = JSON.stringify(data.data.text);
                 switch (true) {
                     case text.includes("invalid Username"):
-                           // TODO: romel set duplicate error   
                         alert(lang.invalidUsername);
-                        return ( )=>{this.setState({
-                            spiner:false
-                        })}
+                        break;
                     case text.includes("invalid Password"):
                         // TODO: romel set duplicate error   
-               
                         alert(lang.invalidPassword);
+                        break;
                     default:
                         alert("ok");
                 }
@@ -140,10 +134,6 @@ export default class SignIn extends Component {
                                 <Icon name="md-eye" type="Ionicons" />
                             </TouchableOpacity>
                         </View>
-                        {this.state.spiner &&
-                            <Spinner color="blue" style={{ position: 'absolute', alignSelf: 'center' }} />
-
-                        }
                         <TouchableOpacity style={Logincss.btn} onPress={() => this.login()}>
                             <Text style={{ color: '#fff', fontSize: 18 }}>{lang.btn_login}</Text>
                         </TouchableOpacity>

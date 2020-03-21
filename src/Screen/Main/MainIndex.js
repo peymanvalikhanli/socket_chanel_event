@@ -56,9 +56,9 @@ var button = createBottomTabNavigator({
 
 }, {
     tabBarOptions: {
-        inactiveTintColor: '#000',
+        inactiveTintColor: '#c5cde2',
         showLabel: false,
-        activeTintColor: 'red',
+        activeTintColor: '#9a3b59',
     },
 });
 
