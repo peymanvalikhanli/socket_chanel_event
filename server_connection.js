@@ -1,7 +1,14 @@
 import {AsyncStorage} from 'react-native';
 
+import PushNotification from 'react-native-push-notification'
+
+import Echo from 'laravel-echo/dist/echo';
+import io from 'socket.io-client';
+let echo;
+
 const URLs = {
   Root: 'http://164.138.18.90:8080/mbiz/task_api/public/api/',
+  socket: 'http://164.138.18.90:6001', 
   user: 'user',
   login: 'Login',
   register: 'Register',
@@ -21,6 +28,7 @@ const URLs = {
 };
 
 export default class server_connection {
+  static chat_By = null; 
   static user_token = null;
   static async register(name, email, pass, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.register, {
@@ -103,17 +111,54 @@ export default class server_connection {
         this.user_token = result;
         console.log('NEBKA check login :', result);
         if (func != null) {
-          func(this_class);
+          func(this_class,true);
         } else if (this_class != null) {
           this_class.setState({
             n: this_class.props.navigation.navigate('ChatlistIndex'),
           });
+          PushNotification.configure({
+            // (required) Called when a remote or local notification is opened or received
+            onNotification: function(notification) {
+              console.log('LOCAL NOTIFICATION ==>', notification)
+            },
+          popInitialNotification: true,
+            requestPermissions: true
+          });
+      
+          echo = new Echo({
+            broadcaster: 'socket.io',
+            host: this.socket,
+            client: io,
+            auth: {
+              headers: {
+                'X-CSRF-TOKEN': this.user_token
+              }
+            },
+          });
+            echo 
+            .channel('laravel_database_private-message.'+this.user_token)
+            .listen('PostCreatedEvent', function(e) {
+              console.log('notification  logs : ', e);
+              PushNotification.localNotification({
+                autoCancel: true,
+                bigText:
+                e.post.data.Content,
+                subText: 'MEGABIZ APP',
+                title: 'Local Notification Title',
+                message: e.post.data.Content,
+                vibrate: true,
+                vibration: 300,
+                playSound: true,
+                soundName: 'default',
+                actions: '["OK"]'
+              });
+            });
         }
         return true;
       } else {
         console.log('NEBKA check login :', err);
         if (func != null) {
-          func(this_class);
+          func(this_class,false);
         } else if (this_class != null) {
           this_class.setState({
             n: this_class.props.navigation.navigate('SignIn'),
@@ -124,12 +169,17 @@ export default class server_connection {
     });
   }
 
-  static async logout() {
+  static async logout(this_class = null) {
     try {
       AsyncStorage.setItem('Token', null);
       AsyncStorage.setItem('Name', null);
       AsyncStorage.setItem('Email', null);
       AsyncStorage.clear();
+      if (this_class != null) {
+        this_class.setState({
+          n: this_class.props.navigation.navigate('SignIn'),
+        });
+      }
       return true;
     } catch (e) {
       return e;
@@ -490,6 +540,7 @@ export default class server_connection {
         return responseJson;
       })
       .catch(error => {
+        //console.error('NABKE fetch Group list', error);
         if (func != null) {
           func(error, this_class);
         }
