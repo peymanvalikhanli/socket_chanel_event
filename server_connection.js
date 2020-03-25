@@ -2,9 +2,7 @@ import {AsyncStorage} from 'react-native';
 
 import PushNotification from 'react-native-push-notification'
 
-import Echo from 'laravel-echo/dist/echo';
-import io from 'socket.io-client';
-let echo;
+
 
 const URLs = {
   Root: 'http://164.138.18.90:8080/mbiz/task_api/public/api/',
@@ -29,6 +27,8 @@ const URLs = {
 
 export default class server_connection {
   static chat_By = null; 
+  static last_message_id = null;
+  static chat_data = []; 
   static user_token = null;
   static async register(name, email, pass, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.register, {
@@ -111,8 +111,12 @@ export default class server_connection {
         this.user_token = result;
         console.log('NEBKA check login :', result);
         if (func != null) {
-          func(this_class,true);
+          setTimeout(() => {
+            func(this_class,true);
+          }, 1000);
+          return true; 
         } else if (this_class != null) {
+           
           this_class.setState({
             n: this_class.props.navigation.navigate('ChatlistIndex'),
           });
@@ -124,35 +128,7 @@ export default class server_connection {
           popInitialNotification: true,
             requestPermissions: true
           });
-      
-          echo = new Echo({
-            broadcaster: 'socket.io',
-            host: this.socket,
-            client: io,
-            auth: {
-              headers: {
-                'X-CSRF-TOKEN': this.user_token
-              }
-            },
-          });
-            echo 
-            .channel('laravel_database_private-message.'+this.user_token)
-            .listen('PostCreatedEvent', function(e) {
-              console.log('notification  logs : ', e);
-              PushNotification.localNotification({
-                autoCancel: true,
-                bigText:
-                e.post.data.Content,
-                subText: 'MEGABIZ APP',
-                title: 'Local Notification Title',
-                message: e.post.data.Content,
-                vibrate: true,
-                vibration: 300,
-                playSound: true,
-                soundName: 'default',
-                actions: '["OK"]'
-              });
-            });
+          
         }
         return true;
       } else {
