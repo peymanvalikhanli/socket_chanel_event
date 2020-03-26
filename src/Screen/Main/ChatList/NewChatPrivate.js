@@ -53,47 +53,10 @@ export default class NewChatPrivate extends Component {
       txt: '',
       data: [],
       timer:'',
+      index:5,
     };
 
     class_this = this;
-    // echo = new Echo({
-    //   broadcaster: 'socket.io',
-    //   host: 'http://164.138.18.90:6001',
-    //   client: io,
-    //   auth: {
-    //     headers: {
-    //       'X-CSRF-TOKEN': server_connection.user_token,
-    //     },
-    //   },
-    // });
-    // echo
-    //   .channel(
-    //     'laravel_database_private-message.' + server_connection.user_token,
-    //   )
-    //   .listen('PostCreatedEvent', function(e) {
-    //     console.log('newpost logs : ', e);
-    //     var t = {
-    //       key: 'z',
-    //       text: e.post.data.Content,
-    //       image: '',
-    //       date: e.post.data.created_at,
-    //       user_id: 2,
-    //     };
-    //     class_this.setState(rom => {
-    //       return {
-    //         data: [...rom.data, t],
-    //         txt: '',
-    //         disableinput: true,
-    //         hide: false,
-    //         hide2: true,
-    //         hide3: true,
-    //         width: 200,
-    //       };
-    //     });
-    //     setTimeout(() => {
-    //       class_this.refs.fla.scrollToEnd();
-    //     }, 300);
-    //   });
   }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', () =>
@@ -376,6 +339,8 @@ export default class NewChatPrivate extends Component {
 
   render() {
     data = this.props.navigation.state.params.pname;
+
+
 
     if (this.state.getData == null) {
       this.setState({user_data: data, getData: true});

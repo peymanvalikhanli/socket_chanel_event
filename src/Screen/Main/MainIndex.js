@@ -17,8 +17,7 @@ var button = createBottomTabNavigator({
             ),
         },
     },
-
-
+    
     TaskList: {
         screen: TaskList,
         navigationOptions: {
