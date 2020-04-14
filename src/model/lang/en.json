@@ -6,5 +6,11 @@
     "invalidPassword": "invalid Password",
     "btn_login":"login",
     "btn_register":"Do you registered ?",
-    "btn_forget_password":"forget password"
+    "btn_forget_password":"forget password",
+    "enter_grup_name": "Please enter group name.",
+    "validation_message": "Validation message", 
+    "ok":"OK", 
+    "select_member":"Please select member or members.", 
+    "duplicate_group":"A group with this name has already been registered.", 
+    "":"" 
 }
