@@ -16,7 +16,6 @@ export default class splash extends Component {
   constructor() {
     super();
     server_connection.check_login(this, this.run_server_connection);
-    //server_connection.chat_By = null;
     AsyncStorage.setItem('user_message', "");
   }
 
@@ -116,11 +115,6 @@ export default class splash extends Component {
   }
 
   render() {
-    setTimeout(() => {
-      // this.props.navigation.navigate('SignIn')
-      //  server_connection.logout();
-      // server_connection.check_login(this);
-    }, 3000);
 
     return (
       <LinearGradient colors={['#fff', '#fff']} style={styles.linearGradient}>

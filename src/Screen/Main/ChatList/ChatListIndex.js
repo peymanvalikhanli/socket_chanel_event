@@ -5,7 +5,7 @@ import ChatList from './ChatList';
 import NewChat from './NewChat';
 import NewGroupChat from './NewGroupChat';
 import PrivateChatList from './PrivateChatList';
-import NewChatPrivate from './NewChatPrivate';
+import PrivateChat from './PrivateChat';
 const stuck = createStackNavigator(
   {
     ChatList: {
@@ -17,14 +17,11 @@ const stuck = createStackNavigator(
     NewChat: {
       screen: NewChat,
     },
-    NewChatPrivate: {
-      screen: NewChatPrivate,
+    PrivateChat: {
+      screen: PrivateChat,
     },
     PrivateChatList: {
       screen: PrivateChatList,
-    },
-    NewChatPrivate: {
-      screen: NewChatPrivate,
     },
   },
   {
@@ -34,11 +31,14 @@ const stuck = createStackNavigator(
 
 stuck.navigationOptions = ({navigation}) => {
   let tabBarVisible = true;
-  console.log("(navigation.state", navigation.state); 
+  console.log('(navigation.state', navigation.state);
   if (navigation.state.index >= 3) {
     tabBarVisible = false;
   }
-  if (navigation.state.routes[navigation.state.routes.length-1].routeName == "NewChatPrivate"){
+  if (
+    navigation.state.routes[navigation.state.routes.length - 1].routeName ==
+    'PrivateChat'
+  ) {
     tabBarVisible = false;
   }
   return {

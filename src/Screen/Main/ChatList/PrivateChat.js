@@ -37,7 +37,7 @@ const options = {
   mediaType: 'mixed',
 };
 
-export default class NewChatPrivate extends Component {
+export default class PrivateChat extends Component {
   constructor() {
     super();
     this.state = {
