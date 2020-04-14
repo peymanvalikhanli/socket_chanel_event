@@ -4,7 +4,7 @@ import ChatListIndex from './ChatList/ChatListIndex';
 import TaskList from './TaskList/TaskList';
 import CancelList from './CancelList/CancelList';
 import TaskListDone from './TaskListDone/TaskListDone';
-import Seting from './Setting/Setting';
+import Setting from './Setting/Setting';
 import {Container, Header, Content, Icon} from 'native-base';
 
 
@@ -43,8 +43,8 @@ var button = createBottomTabNavigator({
             ),
         },
     },
-   Seting: {
-        screen: Seting,
+   Setting: {
+        screen: Setting,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
                 <Icon name="cogs" type="FontAwesome" size={30} style={{color: tintColor}}/>
