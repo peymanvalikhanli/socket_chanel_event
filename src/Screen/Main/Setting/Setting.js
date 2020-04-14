@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Container, Header, Content, Text, Left, Body, Right, Title, ListItem, Icon, Switch, Button } from "native-base";
 import server_connection from '../../../../server_connection';
 
-export default class Seting extends Component{
+export default class Setting extends Component{
    
 
     constructor(){ 

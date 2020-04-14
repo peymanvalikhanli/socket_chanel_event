@@ -4,7 +4,7 @@ import ChatListIndex from './ChatList/ChatListIndex';
 import TaskList from './TaskList/TaskList';
 import CancelList from './CancelList/CancelList';
 import TaskListDone from './TaskListDone/TaskListDone';
-import Seting from './Seting/Seting';
+import Seting from './Setting/Setting';
 import {Container, Header, Content, Icon} from 'native-base';
 
 
