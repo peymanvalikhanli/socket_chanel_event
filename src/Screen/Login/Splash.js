@@ -36,7 +36,7 @@ export default class splash extends Component {
               if(notification.title == element.From){
                 var data = {key:  element.data.From,
                   name: element.From,}; 
-                this_class.props.navigation.navigate('NewChatPrivate', { pname: data })
+                this_class.props.navigation.navigate('PrivateChat', { pname: data })
               }
             }); 
             console.log('recive message peyman : ', result);

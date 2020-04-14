@@ -40,9 +40,9 @@ export default class ChatList extends Component {
                 data.data.forEach(element => {
                     contact_list_data.push({
                         key:  element.id,
-                        name: element.name,
-                        image: element.Avatar.includes("No Avatar") ? require('../../../Images/logo.png') : require('../../../Images/logo.png'),
-                        date: element.date,
+                        name: element.Name,
+                        image:  require('../../../Images/logo.png'),
+                        date: "Group",
                     });
                 });
                 this_class.setState({

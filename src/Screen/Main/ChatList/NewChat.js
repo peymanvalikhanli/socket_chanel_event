@@ -18,7 +18,6 @@ export default class NewChat extends Component {
         return true;
     }
     render() {
-
         return (
             <Container>
                 <Header style={MainCss.header}>

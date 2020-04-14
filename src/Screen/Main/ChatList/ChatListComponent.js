@@ -6,7 +6,7 @@ import { withNavigation } from 'react-navigation';
  class ChatListComponent extends Component{
     render(){
         return(
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('NewChatPrivate', { pname: this.props.d })} >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('PrivateChat', { pname: this.props.d })} >
             <Card>
                 <CardItem style={MainCss.chatlistcartitem}>
                     <View style={MainCss.chatlistitem1}>
