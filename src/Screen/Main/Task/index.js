@@ -1,33 +1,16 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
-import ChatList from './ChatList';
-import NewChat from './NewChat';
-import NewGroupChat from './NewGroupChat';
-import PrivateChatList from './PrivateChatList';
-import PrivateChat from './PrivateChat';
-import GroupChat from './GroupChat'; 
-
+import TaskList from './TaskList/TaskList';
+import NewTask from './NewTask';
 
 const stuck = createStackNavigator(
   {
-    ChatList: {
-      screen: ChatList,
+    TaskList: {
+      screen: TaskList,
     },
-    NewGroupChat: {
-      screen: NewGroupChat,
-    },
-    NewChat: {
-      screen: NewChat,
-    },
-    PrivateChat: {
-      screen: PrivateChat,
-    },
-    GroupChat: {
-      screen: GroupChat,
-    },
-    PrivateChatList: {
-      screen: PrivateChatList,
+    NewTask: {
+      screen: NewTask,
     },
   },
   {

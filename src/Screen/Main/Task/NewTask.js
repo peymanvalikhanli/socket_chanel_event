@@ -41,7 +41,7 @@ const options = {
   tintColor: 'blue',
   mediaType: 'mixed',
 };
-export default class TaskList extends Component {
+export default class NewTask extends Component {
   constructor() {
     super();
     server_connection.contact_list(this.call_back_contact_list, this);
@@ -61,7 +61,7 @@ export default class TaskList extends Component {
       <Container>
         <Header style={MainCss.header}>
           <Text />
-          <Title style={{color: '#00000'}}>Task List</Title>
+          <Title style={{color: '#00000'}}>New Task</Title>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('NewChat')}>
             <Icon name="plus" type="Entypo" style={{color: '#987a3b'}} />
