@@ -24,11 +24,11 @@ import {
   DatePicker,
   Accordion,
 } from 'native-base';
-import MainCss from '../MainCss';
+import MainCss from '../../MainCss';
 import ImagePicker from 'react-native-image-picker';
 import {DocumentPicker, DocumentPickerUtil} from 'react-native-document-picker';
 import Modal from 'react-native-modal';
-import server_connection from '../../../../server_connection';
+import server_connection from '../../../../../server_connection';
 import TaskListComponent from './TaskListComponent';
 import Checklist from './CheckList';
 

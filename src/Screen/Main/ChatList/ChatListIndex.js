@@ -47,6 +47,12 @@ stuck.navigationOptions = ({navigation}) => {
   ) {
     tabBarVisible = false;
   }
+  if (
+    navigation.state.routes[navigation.state.routes.length - 1].routeName ==
+    'GroupChat'
+  ) {
+    tabBarVisible = false;
+  }
   return {
     tabBarVisible,
   };
