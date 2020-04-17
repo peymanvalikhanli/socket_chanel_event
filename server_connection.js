@@ -30,6 +30,7 @@ export default class server_connection {
   static last_message_id = null;
   static chat_data = []; 
   static user_token = null;
+  static active_calass = null;
   static async register(name, email, pass, func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.register, {
       method: 'POST',

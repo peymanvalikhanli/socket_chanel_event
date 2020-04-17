@@ -83,7 +83,7 @@ export default class splash extends Component {
                   subText: 'MEGABIZ APP',
                   title: e.post.From,
                   message: e.post.data.Content,
-                  vibrate: true,
+                  vibrate: true, 
                   vibration: 300,
                   playSound: true,
                   soundName: 'default',

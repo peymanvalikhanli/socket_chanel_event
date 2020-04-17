@@ -6,6 +6,8 @@ import NewChat from './NewChat';
 import NewGroupChat from './NewGroupChat';
 import PrivateChatList from './PrivateChatList';
 import PrivateChat from './PrivateChat';
+import GroupChat from './GroupChat'; 
+
 const stuck = createStackNavigator(
   {
     ChatList: {
@@ -19,6 +21,9 @@ const stuck = createStackNavigator(
     },
     PrivateChat: {
       screen: PrivateChat,
+    },
+    GroupChat: {
+      screen: GroupChat,
     },
     PrivateChatList: {
       screen: PrivateChatList,
