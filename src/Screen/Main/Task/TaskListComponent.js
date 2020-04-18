@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, } from 'react-native';
 import { Card, CardItem, Icon, Container, Item, Toast, } from 'native-base';
-import MainCss from '../../MainCss';
+import MainCss from '../MainCss';
 import { withNavigation } from 'react-navigation';
 
 class TaskListComponent extends Component {

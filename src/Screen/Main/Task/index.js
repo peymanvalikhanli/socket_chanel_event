@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
-import TaskList from './TaskList/TaskList';
+import TaskList from './TaskList';
 import NewTask from './NewTask';
+import Task from './Task';
 
 const stuck = createStackNavigator(
   {
@@ -11,6 +12,9 @@ const stuck = createStackNavigator(
     },
     NewTask: {
       screen: NewTask,
+    },
+    Task: {
+      screen: Task,
     },
   },
   {
@@ -26,7 +30,7 @@ stuck.navigationOptions = ({navigation}) => {
   }
   if (
     navigation.state.routes[navigation.state.routes.length - 1].routeName ==
-    'PrivateChat'
+    'Task'
   ) {
     tabBarVisible = false;
   }

@@ -147,7 +147,21 @@ const MainCss = {
         alignItems: 'center', backgroundColor: '#000dcf', 
         borderWidth: 1,
          borderColor: '#ccc' 
-    }
+    },
+
+    // task styles ===>
+    color_gray:{
+        color : "#8b9dc3",
+    },
+
+    color_primary:{
+        color : "#3b5998",
+    },
+
+    icon_margin:{
+        marginLeft: 10, 
+    }, 
+
 };
 
 
