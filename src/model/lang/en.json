@@ -14,6 +14,7 @@
     "create":"create",
     "Save":"Save", 
     "Done":"Done",
+    "Add":"Add", 
     "select_member":"Please select member or members.", 
     "duplicate_group":"A group with this name has already been registered.", 
     "TaskName":"Task Name", 
@@ -25,6 +26,8 @@
     "chacklist":"Chacklist...", 
     "add_attachments":"Add attachments...", 
     "comment":"Comment...",
+    "AddItem":"Add an item",
+
 
     "":"" 
 }

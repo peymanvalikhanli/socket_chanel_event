@@ -29,10 +29,12 @@ import {DocumentPicker, DocumentPickerUtil} from 'react-native-document-picker';
 import Modal from 'react-native-modal';
 import server_connection from '../../../../server_connection';
 import TaskListComponent from './TaskListComponent';
+import ChecklistItem from './checklist_components/checklist_item_component';
 import Checklist from './CheckList';
 
 import lang from '../../../model/lang/en.json';
-
+import checklist_item_component from './checklist_components/checklist_item_component';
+import ChecklistAddItem from './checklist_components/add_item_component';
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 const options = {
@@ -63,7 +65,7 @@ export default class Task extends Component {
       selected: 'key2',
 
       isModalVisible: false,
-      isMemebersModalVisible: true,
+      isMemebersModalVisible: false,
     };
   }
   componentWillUnmount() {
@@ -173,7 +175,7 @@ export default class Task extends Component {
   }
 
   // label picker
-  onValueChange(value: string) {
+  onValueChange(value) {
     this.setState({
       selected: value,
     });
@@ -258,7 +260,10 @@ export default class Task extends Component {
               <Body />
               <Right />
             </ListItem>
-            <ListItem>
+            <ListItem
+              onPress={() => {
+                this.setState({isMemebersModalVisible: true});
+              }}>
               <Left>
                 <Icon
                   style={[MainCss.color_gray]}
@@ -299,6 +304,51 @@ export default class Task extends Component {
                 </Text>
               </Left>
             </ListItem>
+          </List>
+          {/* check list */}
+          <ListItem itemDivider />
+          <List>
+            
+            <ListItem>
+              <Left>
+                <Icon
+                  style={[MainCss.color_gray]}
+                  name="checkbox-marked-outline"
+                  type="MaterialCommunityIcons"
+                />
+                <Text style={[MainCss.color_gray, MainCss.icon_margin]}>
+                  {lang.chacklist}
+                </Text>
+              </Left>
+              <Right>
+                <Icon style={[MainCss.color_red]} name="trash" type="Entypo" />
+              </Right>
+            </ListItem>
+
+            <ChecklistItem edit_mode={false} text="test" />
+
+            <ChecklistAddItem onPress_add={data => alert(data)} />
+          </List>
+          <List>
+            <ListItem>
+              <Left>
+                <Icon
+                  style={[MainCss.color_gray]}
+                  name="checkbox-marked-outline"
+                  type="MaterialCommunityIcons"
+                />
+                <Text style={[MainCss.color_gray, MainCss.icon_margin]}>
+                  {lang.chacklist}
+                </Text>
+              </Left>
+              <Right>
+                <Icon style={[MainCss.color_red]} name="trash" type="Entypo" />
+              </Right>
+            </ListItem>
+
+            <ChecklistItem edit_mode={false} text="test" />
+
+            <ChecklistAddItem onPress_add={data => alert(data)} />
           </List>
           {/* modals page */}
 
@@ -410,9 +460,7 @@ export default class Task extends Component {
                   </Body>
                 </ListItem>
               </List>
-              <List>
-               
-              </List>
+              <List />
             </Content>
           </Modal>
         </Content>
