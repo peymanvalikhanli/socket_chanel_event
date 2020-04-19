@@ -27,7 +27,7 @@
     "add_attachments":"Add attachments...", 
     "comment":"Comment...",
     "AddItem":"Add an item",
-
-
+    "EnterNameTask":"Please enter task name.",
+    "TryAgain":"Please try again ...", 
     "":"" 
 }

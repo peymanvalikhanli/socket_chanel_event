@@ -1,5 +1,5 @@
 import React, {Component, version} from 'react';
-import {TouchableOpacity, Dimensions} from 'react-native';
+import {TouchableOpacity, Dimensions, Alert} from 'react-native';
 import {
   Container,
   Header,
@@ -16,21 +16,10 @@ import {
   Text,
 } from 'native-base';
 import MainCss from '../MainCss';
-import ImagePicker from 'react-native-image-picker';
-import {DocumentPicker, DocumentPickerUtil} from 'react-native-document-picker';
-import Modal from 'react-native-modal';
 import server_connection from '../../../../server_connection';
 
 import lang from '../../../model/lang/en.json';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
-const options = {
-  videoQuality: 'medium',
-  cameraType: 'back',
-  tintColor: 'blue',
-  mediaType: 'mixed',
-};
 export default class NewTask extends Component {
   constructor() {
     super();
@@ -39,15 +28,41 @@ export default class NewTask extends Component {
       isModalVisible: false,
       ModalVisible: false,
       onBackdropPress: false,
-      data: [],
-      source: '',
-      hideattachment: true,
+      TaskName: '',
     };
-    this.state = {chosenDate: new Date()};
   }
 
   createTask() {
-    this.props.navigation.navigate('Task');
+    var TaskName =  this.state.TaskName; 
+    if (TaskName == '' || TaskName == null) {
+      Alert.alert(lang.error_message, lang.EnterNameTask, [{text: lang.ok}], {
+        cancelable: false,
+      });
+      return;
+    }
+    server_connection.create_task(
+      TaskName,
+      this.call_back_create_task,
+      this,
+    );
+  }
+
+  call_back_create_task(responseJson, this_class) {
+    var data = JSON.stringify(responseJson); 
+    if(data.includes("id")){
+    this_class.props.navigation.replace('Task',{task: responseJson});
+    }else{
+      Alert.alert(lang.error_message, lang.TryAgain, [{text: lang.ok}], {
+        cancelable: false,
+      });
+      return;
+    }
+  }
+
+  ChangeText(txt) {
+    this.setState({
+      TaskName: txt,
+    });
   }
 
   render() {
@@ -62,7 +77,7 @@ export default class NewTask extends Component {
           <Form>
             <Item floatingLabel>
               <Label>{lang.TaskName}</Label>
-              <Input />
+              <Input onChangeText={txt => this.ChangeText(txt)} />
             </Item>
           </Form>
           <Body style={{marginTop: 15}}>

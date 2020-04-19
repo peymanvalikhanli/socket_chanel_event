@@ -1,12 +1,10 @@
 import {AsyncStorage} from 'react-native';
 
-import PushNotification from 'react-native-push-notification'
-
-
+import PushNotification from 'react-native-push-notification';
 
 const URLs = {
   Root: 'http://164.138.18.90:8080/mbiz/task_api/public/api/',
-  socket: 'http://164.138.18.90:6001', 
+  socket: 'http://164.138.18.90:6001',
   user: 'user',
   login: 'Login',
   register: 'Register',
@@ -16,19 +14,32 @@ const URLs = {
   ChatHistory: 'ChatHistory',
   CreateGroup: 'CreateGroup',
   GroupHistory: 'GroupHistory',
-  SendMessage:"SendMessage", 
-  SendMessageGroup:"SendMessageGroup", 
-  DeleteMessage:"DeleteMessage", 
-  DeleteMessageGroup:"DeleteMessageGroup", 
-  Chatlist:"ChatList", 
-  GroupList:"GroupList", 
-  SendFileChat:"SendFileChat", 
+  SendMessage: 'SendMessage',
+  SendMessageGroup: 'SendMessageGroup',
+  DeleteMessage: 'DeleteMessage',
+  DeleteMessageGroup: 'DeleteMessageGroup',
+  Chatlist: 'ChatList',
+  GroupList: 'GroupList',
+  SendFileChat: 'SendFileChat',
+
+  CreateTask: 'CreatTask',
+  SelectTaskMembers: 'SelectTaskMembers',
+  SelectTaskLable: 'SelectTaskLable',
+  ChangeTaskDescription: 'ChangeTaskDescription',
+  SelectTaskDueDate: 'SelectTaskDueDate',
+  ChangeTaskCheckList: 'ChangeTaskCheckList',
+  AddTaskAttachment: 'AddTaskAttachment',
+  SendTaskComment: 'SendTaskComment',
+  TaskList: 'TaskList',
+  TaskProfile: 'TaskProfile',
+  TaskMembers: 'TaskMembers',
+  TaskLabel: 'TaskLabel',
 };
 
 export default class server_connection {
-  static chat_By = null; 
+  static chat_By = null;
   static last_message_id = null;
-  static chat_data = []; 
+  static chat_data = [];
   static user_token = null;
   static active_calass = null;
   static async register(name, email, pass, func = null, this_class = null) {
@@ -113,29 +124,27 @@ export default class server_connection {
         console.log('NEBKA check login :', result);
         if (func != null) {
           setTimeout(() => {
-            func(this_class,true);
+            func(this_class, true);
           }, 1000);
-          return true; 
+          return true;
         } else if (this_class != null) {
-           
           this_class.setState({
             n: this_class.props.navigation.navigate('ChatlistIndex'),
           });
           PushNotification.configure({
             // (required) Called when a remote or local notification is opened or received
             onNotification: function(notification) {
-              console.log('LOCAL NOTIFICATION ==>', notification)
+              console.log('LOCAL NOTIFICATION ==>', notification);
             },
-          popInitialNotification: true,
-            requestPermissions: true
+            popInitialNotification: true,
+            requestPermissions: true,
           });
-          
         }
         return true;
       } else {
         console.log('NEBKA check login :', err);
         if (func != null) {
-          func(this_class,false);
+          func(this_class, false);
         } else if (this_class != null) {
           this_class.setState({
             n: this_class.props.navigation.navigate('SignIn'),
@@ -345,9 +354,15 @@ export default class server_connection {
         }
         return error;
       });
-  } 
-  
-  static async send_message(id, message, title, func = null, this_class = null) {
+  }
+
+  static async send_message(
+    id,
+    message,
+    title,
+    func = null,
+    this_class = null,
+  ) {
     return await fetch(URLs.Root + URLs.SendMessage, {
       method: 'POST',
       headers: new Headers({
@@ -359,7 +374,7 @@ export default class server_connection {
       body: JSON.stringify({
         id: id,
         message: message,
-        title : title
+        title: title,
       }),
     })
       .then(response => response.json())
@@ -379,7 +394,13 @@ export default class server_connection {
       });
   }
 
-  static async send_message_group(id, message, title, func = null, this_class = null) {
+  static async send_message_group(
+    id,
+    message,
+    title,
+    func = null,
+    this_class = null,
+  ) {
     return await fetch(URLs.Root + URLs.SendMessageGroup, {
       method: 'POST',
       headers: new Headers({
@@ -391,7 +412,7 @@ export default class server_connection {
       body: JSON.stringify({
         id: id,
         message: message,
-        title : title
+        title: title,
       }),
     })
       .then(response => response.json())
@@ -471,7 +492,7 @@ export default class server_connection {
       });
   }
 
- static async Chat_list(func = null, this_class = null) {
+  static async Chat_list(func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.Chatlist, {
       method: 'POST',
       headers: new Headers({
@@ -498,7 +519,7 @@ export default class server_connection {
       });
   }
 
- static async group_list(func = null, this_class = null) {
+  static async group_list(func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.GroupList, {
       method: 'POST',
       headers: new Headers({
@@ -524,7 +545,7 @@ export default class server_connection {
         return error;
       });
   }
-  
+
   static async send_file_chat(func = null, this_class = null) {
     return await fetch(URLs.Root + URLs.GroupList, {
       method: 'POST',
@@ -551,6 +572,33 @@ export default class server_connection {
         return error;
       });
   }
-
-
+  static async create_task(name, func = null, this_class = null) {
+    return await fetch(URLs.Root + URLs.CreateTask, {
+      method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Accept: 'application/json, text-plain, /',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': this.user_token,
+      }),
+      body: JSON.stringify({
+        Name: name,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        console.log('NABKE fetch Contact List', responseJson);
+        if (func != null) {
+          func(responseJson, this_class);
+        }
+        return responseJson;
+      })
+      .catch(error => {
+        console.error('NABKE fetch Contact List', error);
+        if (func != null) {
+          func(error, this_class);
+        }
+        return error;
+      });
+  }
 }
